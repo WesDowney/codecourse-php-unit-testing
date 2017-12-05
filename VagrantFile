@@ -18,15 +18,11 @@ Vagrant.configure("2") do |config|
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
-  config.vm.network "forwarded_port", guest: 80, host: 1080
-  config.vm.network "forwarded_port", id: "ssh", guest: 22, host: 1022
+  config.vm.network "forwarded_port", guest: 80, host: 10080
+  config.vm.network "forwarded_port", id: "ssh", guest: 22, host: 10022
 
-  if Vagrant.has_plugin?("vagrant-winnfsd")
-      config.vm.network :private_network, ip: "192.168.55.23"
-      config.vm.synced_folder ".", "/vagrant", type: "nfs", :mount_options => ['nolock,vers=3,udp,noatime']
-      config.winnfsd.uid = 1000
-      config.winnfsd.gid = 1000
-  end
+  # Sync folder
+  config.vm.synced_folder ".", "/vagrant"
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
